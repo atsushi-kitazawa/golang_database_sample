@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"strconv"
 
 	_ "github.com/lib/pq"
 )
@@ -33,4 +34,18 @@ func main() {
 	fmt.Println(t.id)
 	fmt.Println(t.name)
     }
+
+    // insert table
+    tableCount, err := db.Query("SELECT COUNT(*) FROM t1")
+    if err != nil {
+	log.Fatalln("err=", err)
+    }
+
+    var cnt int
+    tableCount.Next()
+    tableCount.Scan(&cnt)
+
+    id := cnt + 1
+    name := "aaa" + strconv.Itoa(id)
+    db.QueryRow("INSERT INTO t1 VALUES ($1, $2)", id, name)
 }
