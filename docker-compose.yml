@@ -1,0 +1,27 @@
+version: '3.1'
+services:
+  go:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: /golang_database_sample
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/app
+    ports:
+      - 18080:18080
+    depends_on:
+      - db
+  
+  db:
+    image: postgres:14.2-alpine
+    container_name: my_postgres_14
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+    - $HOME/workspace/docker/postgres/14:/var/lib/postgresql/data
+    ports:
+    - 25432:5432
