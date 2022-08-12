@@ -22,6 +22,7 @@ services:
       POSTGRES_PASSWORD: password
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
-    - $HOME/workspace/docker/postgres/14:/var/lib/postgresql/data
+    - ./docker/postgres/pgdata:/var/lib/postgresql/data
+    - ./docker/postgres/initdb:/docker-entrypoint-initdb.d
     ports:
     - 25432:5432
